@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import Cart from './pages/cart/Cart';
-import NotFound from './pages/error/NotFound';
-import Index from './pages/Index';
-import Products from './pages/products/Products';
+import IndexPage from './pages';
+import CartPage from './pages/cart';
+import ProductPage from './pages/products';
+import NotFound from './pages/error/not-found';
 
 function App() {
   return (
@@ -15,9 +15,9 @@ function App() {
         <Link to="/error">error</Link>
       </nav>
       <Switch>
-        <Route exact path="/" component={Index} />
-        <Route path="/products" component={Products} />
-        <Route path="/cart" component={Cart} />
+        <Route exact path="/" component={IndexPage} />
+        <Route path="/products" component={ProductPage} />
+        <Route path="/cart" component={CartPage} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Cart: React.FC = () => {
+const CartPage: React.FC = () => {
   return (
     <div>
       cart
@@ -8,4 +8,4 @@ const Cart: React.FC = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

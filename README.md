@@ -3,17 +3,17 @@
 ## TODO
 
 - setting
-  - [ ] port 3001
+  - [x] port 3001
 - products page
-  - [ ] product list (price, name, image, )
+  - [x] product list (price, name, image, )
   - [ ] pagination
-  - [ ] add product
-  - [ ] del product
-  - [ ] max 3
+  - [x] add product
+  - [x] del product
+  - [x] max 3
 - cart page
-  - [ ] add
-  - [ ] del
-  - [ ] show total amount
+  - [x] add
+  - [x] del
+  - [x] show total amount
 - coupon
   - [ ] discount amount
   - [ ] discount rate

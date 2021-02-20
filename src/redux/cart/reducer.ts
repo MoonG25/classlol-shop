@@ -1,4 +1,4 @@
-import { Cart, CartItem, LOCAL_STORAGE_KEY } from "../../types";
+import { Cart } from "../../types";
 import { ADD_PRODUCT, CartActionTypes, DEL_PRODUCT } from "./actions";
 
 export interface CartState {
@@ -9,11 +9,6 @@ export interface CartState {
 export const initialCartState: CartState = {
   cart: {},
   totalAmount: 0,
-}
-
-export const getLocalStorageCart = () => {
-  const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  return storedData || initialCartState;
 }
 
 export function cartReducer (

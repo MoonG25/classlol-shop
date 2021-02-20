@@ -1,4 +1,3 @@
-export const LOCAL_STORAGE_KEY = 'LOCAL_STORAGE_KEY';
 export type CouponType = 'rate' | 'amount';
 
 export default interface Coupon {

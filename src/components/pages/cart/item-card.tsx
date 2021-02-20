@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ADD_PRODUCT, DEL_PRODUCT } from '../../../redux/cart/actions';
-import { Product } from '../../../types';
+import { CartItem, Product } from '../../../types';
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
@@ -12,13 +12,13 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const connector = connect(null, mapDispatchToProps);
 
-type ProductProps = {
-  product: Product;
+type ItemProps = {
+  item: CartItem;
   addProduct: Function;
   delProduct: Function;
 }
 
-const ProductCard: React.FC<ProductProps> = ({product, addProduct, delProduct}) => {
+const ItemCard: React.FC<ItemProps> = ({item: { product, quantity }, addProduct, delProduct}) => {
   const handleAdd = () => addProduct(product);
   const handleDel = () => delProduct(product.id);
   return (
@@ -29,8 +29,9 @@ const ProductCard: React.FC<ProductProps> = ({product, addProduct, delProduct}) 
       <span>{product.score}</span>
       <button onClick={handleAdd}>add</button>
       <button onClick={handleDel}>del</button>
+      <h1>수량 : {quantity}</h1>
     </li>
   )
 }
 
-export default connector(ProductCard);
+export default connector(ItemCard);

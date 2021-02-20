@@ -14,7 +14,13 @@ const ProductPage: React.FC = () => {
   }, [])
   return (
     <ul>
-      { products.map((product: Product) => <ProductCard key={product.id} product={product} />) }
+      { 
+        products.map((product: Product) => 
+          <ProductCard 
+            key={product.id} 
+            product={product} 
+          />)
+      }
     </ul>
   );
 };

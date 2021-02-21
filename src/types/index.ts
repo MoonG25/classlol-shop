@@ -1,9 +1,10 @@
 export type CouponType = 'rate' | 'amount';
 
-export default interface Coupon {
+export interface Coupon {
   type: CouponType;
   title: string;
-  discountRate: number;
+  discountRate?: number;
+  discountAmount?: number;
 }
 
 export interface Product {

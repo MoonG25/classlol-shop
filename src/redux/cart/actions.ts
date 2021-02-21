@@ -1,9 +1,10 @@
-import { Product } from "../../types";
+import { Coupon, Product } from "../../types";
 
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const DEL_PRODUCT = 'DEL_PRODUCT';
 export const CHECK_CART_ITEM = 'CHECK_CART_ITEM';
 export const UNCHECK_CART_ITEM = 'UNCHECK_CART_ITEM';
+export const UPDATE_COUPON = 'UPDATE_COUPON';
 
 interface AddProductAction {
   type: typeof ADD_PRODUCT,
@@ -33,7 +34,15 @@ interface UnCheckCartItemAction {
   }
 }
 
+interface UpdateCouponAction {
+  type: typeof UPDATE_COUPON,
+  payload: {
+    coupon: Coupon
+  }
+}
+
 export type CartActionTypes = AddProductAction 
   | DelProductAction
   | CheckCartItemAction
-  | UnCheckCartItemAction;
+  | UnCheckCartItemAction
+  | UpdateCouponAction;

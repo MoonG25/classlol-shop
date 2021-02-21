@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
-import { ADD_PRODUCT, CHECK_CART_ITEM, DEL_PRODUCT, UNCHECK_CART_ITEM } from '../../../redux/cart/actions';
+import { ADD_PRODUCT, CartActionTypes, CHECK_CART_ITEM, DEL_PRODUCT, UNCHECK_CART_ITEM } from '../../../redux/cart/actions';
 import { CartItem, Product } from '../../../types';
 import styled from 'styled-components';
 
@@ -59,16 +59,9 @@ const ItemCardWrapper = styled.div`
     background-color: white;
     outline: none;
   }
-
-  .cart__item-coupon {
-    height: 28px;
-    border: 1px solid #eee;
-    background-color: white;
-    outline: none;
-  }
 `;
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<CartActionTypes>) => {
   return {
     addProduct: (product: Product) => dispatch({ type: ADD_PRODUCT, payload: { product }}),
     delProduct: (id: Product['id']) => dispatch({ type: DEL_PRODUCT, payload: { id }}),
@@ -111,7 +104,6 @@ const ItemCard: React.FC<ItemProps> = ({
           <button className="cart__item-button" onClick={handleDel}>-</button>
           <input type="text" pattern="[0-9]*" readOnly value={quantity} />
           <button className="cart__item-button" onClick={handleAdd}>+</button>
-          <button className="cart__item-coupon">coupon</button>
         </div>
       </div>
     </ItemCardWrapper>

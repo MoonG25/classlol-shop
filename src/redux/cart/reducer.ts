@@ -1,8 +1,9 @@
-import { Cart } from "../../types";
-import { ADD_PRODUCT, CartActionTypes, CHECK_CART_ITEM, DEL_PRODUCT, UNCHECK_CART_ITEM } from "./actions";
+import { Cart, Coupon } from "../../types";
+import { ADD_PRODUCT, CartActionTypes, CHECK_CART_ITEM, DEL_PRODUCT, UNCHECK_CART_ITEM, UPDATE_COUPON } from "./actions";
 
 export interface CartState {
   cart: Cart;
+  coupon?: Coupon;
   totalAmount: number;
 }
 
@@ -11,6 +12,9 @@ export const initialCartState: CartState = {
   totalAmount: 0,
 }
 
+/**
+ * @todo immer 
+ */
 export function cartReducer (
   state = initialCartState,
   action: CartActionTypes
@@ -31,6 +35,7 @@ export function cartReducer (
             isChecked
           }
         },
+        coupon: state.coupon,
         totalAmount: state.totalAmount + product.price
       } : state;
     }
@@ -43,6 +48,7 @@ export function cartReducer (
         if (cart[id].quantity === 0) delete cart[id];
         return {
           cart: cart,
+          coupon: state.coupon,
           totalAmount: state.totalAmount - product.price
         }
       }
@@ -59,6 +65,7 @@ export function cartReducer (
             isChecked: true
           }
         },
+        coupon: state.coupon,
         totalAmount: state.totalAmount,
       }
     }
@@ -73,7 +80,15 @@ export function cartReducer (
             isChecked: false
           }
         },
+        coupon: state.coupon,
         totalAmount: state.totalAmount,
+      }
+    }
+    case UPDATE_COUPON: {
+      const { payload: { coupon }} = action;
+      return {
+        ...state,
+        coupon,
       }
     }
     default:

@@ -3,6 +3,9 @@ import ProductCard from './product-card';
 import productItems from '../../../data/productItems';
 import { Product } from '../../../types';
 
+/**
+ * @todo pagination
+ */
 const ProductPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {

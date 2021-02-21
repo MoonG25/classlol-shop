@@ -15,11 +15,10 @@ export interface Product {
   availableCoupon?: boolean;
 }
 
-// export type Cart = { [key: string]: number };
-
 export interface CartItem {
   product: Product;
   quantity: number;
+  isChecked?: boolean;
 }
 
 export type Cart = { [key: string]: CartItem };

@@ -1,11 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import Header from './header';
+
+const LayoutWrapper = styled.main`
+  width: 767px;
+  margin: 0 auto;
+`;
 
 const Layout: React.FC = ({children}) => {
   return (
-    <div>
+    <LayoutWrapper>
+      <Header />
       {children}
-    </div>
+    </LayoutWrapper>
   );
 };
 
-export {Layout};
+export default Layout;

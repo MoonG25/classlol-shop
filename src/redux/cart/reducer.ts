@@ -1,5 +1,5 @@
 import { Cart } from "../../types";
-import { ADD_PRODUCT, CartActionTypes, DEL_PRODUCT } from "./actions";
+import { ADD_PRODUCT, CartActionTypes, CHECK_CART_ITEM, DEL_PRODUCT, UNCHECK_CART_ITEM } from "./actions";
 
 export interface CartState {
   cart: Cart;
@@ -18,14 +18,17 @@ export function cartReducer (
   switch (action.type) {
     case ADD_PRODUCT: {
       const { payload: { product }} = action;
-      const quantity = state.cart[product.id]?.quantity || 0;
+      const cart = state.cart[product.id];
+      const isChecked = (cart?.isChecked === undefined) ? true : cart.isChecked;
+      const quantity = cart?.quantity || 0;
       const totalSize = Object.keys(state.cart).length;
       return (totalSize < 3 || (totalSize === 3 && state.cart[product.id])) ? {
         cart: {
           ...state.cart,
           [product.id]: {
             product,
-            quantity: quantity + 1
+            quantity: quantity + 1,
+            isChecked
           }
         },
         totalAmount: state.totalAmount + product.price
@@ -44,6 +47,34 @@ export function cartReducer (
         }
       }
       return state;
+    }
+    case CHECK_CART_ITEM: {
+      const { payload: { id }} = action;
+      const product = state.cart[id].product;
+      return {
+        cart: {
+          ...state.cart,
+          [product.id]: {
+            ...state.cart[product.id],
+            isChecked: true
+          }
+        },
+        totalAmount: state.totalAmount,
+      }
+    }
+    case UNCHECK_CART_ITEM: {
+      const { payload: { id }} = action;
+      const product = state.cart[id].product;
+      return {
+        cart: {
+          ...state.cart,
+          [product.id]: {
+            ...state.cart[product.id],
+            isChecked: false
+          }
+        },
+        totalAmount: state.totalAmount,
+      }
     }
     default:
       return state;

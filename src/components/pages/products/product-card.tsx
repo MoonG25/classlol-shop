@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ADD_PRODUCT, DEL_PRODUCT } from '../../../redux/cart/actions';
 import { Product } from '../../../types';
 import styled from 'styled-components';
+import { RootState } from '../../../redux';
 
 const ProductCardWrapper = styled.div`
   width: 100%;
@@ -35,14 +36,14 @@ const ProductCardWrapper = styled.div`
     display: flex;
 
     button {
-      cursor: pointer;
-      height: 28px;
+      cursor: pointer;    
+      padding: 5px 15px;
       border: 1px solid #eee;
       background-color: #fff;
       outline: none;
 
       :hover {
-        background-color: #ccc;
+        background-color: #eee;
       }
 
       :active {
@@ -52,6 +53,10 @@ const ProductCardWrapper = styled.div`
   }
 `;
 
+const mapStateToProps = (state: RootState) => ({
+  count: Object.keys(state.cart.cart).length
+});
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
     addProduct: (product: Product) => dispatch({ type: ADD_PRODUCT, payload: { product }}),
@@ -59,17 +64,24 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type ProductProps = {
+  count: number;
   product: Product;
   isAppended: boolean;
   addProduct: Function;
   delProduct: Function;
 }
 
-const ProductCard: React.FC<ProductProps> = ({product, isAppended, addProduct, delProduct}) => {
-  const handleAdd = () => addProduct(product);
+const ProductCard: React.FC<ProductProps> = ({count, product, isAppended, addProduct, delProduct}) => {
+  const handleAdd = () => {
+    if (count === 3) {
+      alert('카트가 꽉 찼습니다.');
+    } else {
+      addProduct(product)
+    }
+  };
   const handleDel = () => delProduct(product.id);
   return (
     <ProductCardWrapper>

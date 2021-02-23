@@ -13,15 +13,6 @@ const IndexPageWrapper = styled.div`
       font-weight: bold;
       margin: 15px;
     }
-    p:nth-child(1) {
-      // color: dodgerblue;
-    }
-    p:nth-child(2) {
-      // color: mediumvioletred;
-    }
-    p:nth-child(3) {
-      // color: yellowgreen;
-    }
   }
 `;
 

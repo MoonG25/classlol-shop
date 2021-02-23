@@ -83,17 +83,17 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, salesAmount, closeCo
   }, []);
 
   useEffect(() => {
-    const calculateAmount = () => {
-      if (selectedCoupon) {
+    if (selectedCoupon) {
+      const calculateAmount = () => {
         if (selectedCoupon.type === 'rate') {
           const pcs = totalAmount - salesAmount;
-          setCalculatedAmount(pcs + salesAmount * (1 - (selectedCoupon.discountRate || 100) / 100));
+          setCalculatedAmount(pcs + Math.floor(salesAmount * (1 - (selectedCoupon.discountRate || 100) / 100)));
         } else {
           setCalculatedAmount(totalAmount - (selectedCoupon.discountAmount || 0));
         }
-      }
-    };
-    calculateAmount();
+      };
+      calculateAmount();
+    }
   }, [selectedCoupon]);
 
   useEffect(() => {

@@ -33,11 +33,11 @@ const PageButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-const mapState = (state: RootState) => ({
+const mapStateToProps = (state: RootState) => ({
   cart: state.cart.cart,
 });
 
-const connector = connect(mapState);
+const connector = connect(mapStateToProps);
 
 type ProductPageProps = {
   cart: Cart;
@@ -45,7 +45,6 @@ type ProductPageProps = {
 
 const ProductPage: React.FC<ProductPageProps> = ({ cart }) => {
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
   const [pages, setPages] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -53,7 +52,6 @@ const ProductPage: React.FC<ProductPageProps> = ({ cart }) => {
     const getProducts = async () => {
       const data: ReturnState = await getProductItems(page);
       setPages(data.pages);
-      setTotal(data.total);
       setProducts(data.productItems);
     };
     getProducts();

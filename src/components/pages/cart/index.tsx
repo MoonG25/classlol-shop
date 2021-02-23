@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from '../../../redux';
 import { Cart, Coupon as CouponState } from '../../../types';
@@ -26,43 +26,21 @@ const CouponButton = styled.button`
   }
 `;
 
-const mapState = (state: RootState) => ({
-  cart: state.cart.cart,
-  coupon: state.cart.coupon,
-  totalAmount: state.cart.totalAmount,
+const mapStateToProps = (state: RootState) => ({
+  ...state.cart,
 });
 
-const connector = connect(mapState);
+const connector = connect(mapStateToProps);
 
 type CartPageProps = {
   cart: Cart;
   coupon?: CouponState;
+  salesAmount: number;
   totalAmount: number;
 }
 
-const CartPage: React.FC<CartPageProps> = ({ cart, coupon }) => {
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [salesAmount, setSalesAmount] = useState(0);
+const CartPage: React.FC<CartPageProps> = ({ cart, coupon, salesAmount, totalAmount }) => {
   const [isShow, setIsShow] = useState(false);
-  useEffect(() => {
-    const calcTotalAmount = async () => {
-      const {total, sales} = await Object.values(cart).reduce((data, { isChecked, product, quantity }) => {
-        if (isChecked) {
-          const currentProductPrice = (product.price * quantity);
-          data.total += currentProductPrice;
-          data.sales += (product.availableCoupon !== false) ? currentProductPrice : 0;
-        }
-        return data;
-      }, {
-        total: 0,
-        sales: 0
-      });
-      setTotalAmount(total);
-      setSalesAmount(sales);
-    };
-
-    calcTotalAmount();
-  }, [cart]);
   const openCouponBox = () => {
     if (Object.values(cart).length) {
       setIsShow(true);

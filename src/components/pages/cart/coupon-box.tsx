@@ -20,14 +20,14 @@ const BoxWrapper = styled.div`
   .box-inner {
     width: 360px;
     min-height: 480px;
-    background-color: white;
+    background-color: #fff;
     padding: 10px;
     border-radius: 7px;
   }
 
   .box-close {
     float: right;
-    background-color: white;
+    background-color: #fff;
     border: none;
     margin-bottom: 1em;
     outline: none;
@@ -40,12 +40,16 @@ const BoxWrapper = styled.div`
   }
 
   .coupon-button {
-    margin-top: 1em;
+    margin: 10px 0;
     width: 100%;
     padding: 12px;
-    background-color: white;
+    background-color: #fff;
     border: 1px solid #eee;
     cursor: pointer;
+  }
+
+  .coupon-hint {
+    color: red;
   }
 `;
 
@@ -59,12 +63,13 @@ const connector = connect(null, mapDispatchToProps);
 
 type CouponBoxProps = {
   totalAmount: number;
+  salesAmount: number;
   closeCouponBox: Function;
   prevCoupon?: CouponState;
   updateCoupon: Function;
 };
 
-const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prevCoupon, updateCoupon }) => {
+const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, salesAmount, closeCouponBox, prevCoupon, updateCoupon }) => {
   const [itemCoupons, setItemCoupons] = useState<CouponState[]>([]);
   const [calculatedAmount, setCalculatedAmount] = useState(totalAmount);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponState | undefined>(undefined);
@@ -81,7 +86,8 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prev
     const calculateAmount = () => {
       if (selectedCoupon) {
         if (selectedCoupon.type === 'rate') {
-          setCalculatedAmount(totalAmount * (1 - (selectedCoupon.discountRate || 100) / 100));
+          const pcs = totalAmount - salesAmount;
+          setCalculatedAmount(pcs + salesAmount * (1 - (selectedCoupon.discountRate || 100) / 100));
         } else {
           setCalculatedAmount(totalAmount - (selectedCoupon.discountAmount || 0));
         }
@@ -108,7 +114,7 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prev
   const getResultText = () => {
     if (selectedCoupon) {
       if (selectedCoupon.type === 'rate') {
-        return `${totalAmount.toLocaleString('en-US')} * ${(selectedCoupon.discountRate || 100) / 100} = ${calculatedAmount.toLocaleString('en-US')}`;;
+        return `${totalAmount.toLocaleString('en-US')} * ${(selectedCoupon.discountRate || 100) / 100} = ${calculatedAmount.toLocaleString('en-US')}`;
       } else {
         return `${totalAmount.toLocaleString('en-US')} - ${(selectedCoupon.discountAmount || 0).toLocaleString('en-US')} = ${calculatedAmount.toLocaleString('en-US')}`;
       }
@@ -135,6 +141,7 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prev
         }
         { selectedCoupon && <h4>{getResultText()}원</h4> }
         <button className="coupon-button" onClick={handleUpdateCoupon}>쿠폰적용</button>
+        <h4 className="coupon-hint">쿠폰 적용이 불가능한 상품을 제외한 결과입니다.</h4>
       </div>
     </BoxWrapper>
   )

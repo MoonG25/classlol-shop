@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 const PageWrapper = styled.div`
   width: 100%;
+  margin-bottom: 35px;
 
   .page-buttons {
     text-align: right;
@@ -22,11 +23,11 @@ const PageButton = styled.button<{ isActive: boolean }>`
   
   ${p => p.isActive 
     ? `
-      background-color: black;
-      color: white;
+      background-color: #000;
+      color: #fff;
       ` 
     : `
-      background-color: white;
+      background-color: #fff;
       cursor: pointer;
       `
   }
@@ -42,10 +43,6 @@ type ProductPageProps = {
   cart: Cart;
 }
 
-/**
- * @todo [x] pagination
- * @todo [ ] 담기 뺴기 처리
- */
 const ProductPage: React.FC<ProductPageProps> = ({ cart }) => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);

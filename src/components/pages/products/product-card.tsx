@@ -6,15 +6,14 @@ import styled from 'styled-components';
 
 const ProductCardWrapper = styled.div`
   width: 100%;
-  height: 149px;
   padding: 12px;
   display: flex;
   column-gap: 1em;
   border-bottom: 1px solid #eee;
 
   img {
-    width: 125px;
-    height: 125px;
+    width: 336px;
+    height: 189px;
   }
 
   .product-info {
@@ -25,6 +24,10 @@ const ProductCardWrapper = styled.div`
   .product-title {
     margin-bottom: 10px;
     display: block;
+  }
+
+  .product-price {
+    font-weight: bold;
   }
 
   .product-actions {
@@ -72,7 +75,7 @@ const ProductCard: React.FC<ProductProps> = ({product, isAppended, addProduct, d
     <ProductCardWrapper>
       <img src={product.coverImage} alt="product_image" />
       <div className="product-info">
-        <h2 className="product-title">{product.title}</h2>
+        <h4 className="product-title">{product.title}</h4>
         <span className="product-price">{product.price.toLocaleString('en-US')} 원</span>
         <div className="product-actions">
           <button onClick={handleAdd} disabled={isAppended}>담기</button>

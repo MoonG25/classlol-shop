@@ -9,6 +9,7 @@ const CouponWrapper = styled.div`
   border: 1px solid #eee;
   width: 100%;
   padding: 5px;
+  margin: 3px 0;
 `;
 
 type CouponProps = {

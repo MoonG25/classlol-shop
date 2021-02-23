@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 const ItemCardWrapper = styled.div`
   width: 100%;
-  height: 149px;
   padding: 12px;
   display: flex;
   column-gap: 1em;
@@ -18,8 +17,8 @@ const ItemCardWrapper = styled.div`
   }
 
   img {
-    width: 125px;
-    height: 125px;
+    width: 336px;
+    height: 189px;
   }
 
   .cart__item-info {
@@ -32,8 +31,12 @@ const ItemCardWrapper = styled.div`
     display: block;
   }
 
+  .cart__item-price {
+    font-weight: bold;
+  }
+
   .cart__item-actions {
-    margin-top: 10px;
+    margin: 10px 0;
     display: flex;
   }
 
@@ -55,8 +58,12 @@ const ItemCardWrapper = styled.div`
     width: 28px;
     height: 28px;
     border: 1px solid #eee;
-    background-color: white;
+    background-color: #fff;
     outline: none;
+  }
+
+  .warning-coupon {
+    color: red;
   }
 `;
 
@@ -97,13 +104,14 @@ const ItemCard: React.FC<ItemProps> = ({
       <input type="checkbox" checked={isChecked} onChange={handleItemCheck}></input>
       <img src={product.coverImage} alt="product_image" />
       <div className="cart__item-info">
-        <h2 className="cart__item-title">{product.title}</h2>
+        <h4 className="cart__item-title">{product.title}</h4>
         <span className="cart__item-price">{product.price.toLocaleString('en-US')} 원</span>
         <div className="cart__item-actions">
           <button className="cart__item-button" onClick={handleDel}>-</button>
           <input type="text" pattern="[0-9]*" readOnly value={quantity} />
           <button className="cart__item-button" onClick={handleAdd}>+</button>
         </div>
+        { (product.availableCoupon === false) && <span className="warning-coupon">쿠폰불가</span> }
       </div>
     </ItemCardWrapper>
   )

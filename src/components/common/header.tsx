@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
-  padding: 15px;
+  padding: 35px 0;
 
   a:not(:first-child) {
     margin-left: 1em;
@@ -13,10 +13,9 @@ const HeaderWrapper = styled.header`
 export default function Header() {
   return (
     <HeaderWrapper>
-      <Link to="/">index</Link>
+      <Link to="/">home</Link>
       <Link to="/products">products</Link>
       <Link to="/cart">cart</Link>
-      <Link to="/error">error</Link>
     </HeaderWrapper>
   );
 }

@@ -114,7 +114,7 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, salesAmount, closeCo
   const getResultText = () => {
     if (selectedCoupon) {
       if (selectedCoupon.type === 'rate') {
-        return `${totalAmount.toLocaleString('en-US')} * ${(selectedCoupon.discountRate || 100) / 100} = ${calculatedAmount.toLocaleString('en-US')}`;
+        return `${totalAmount.toLocaleString('en-US')} * ${1 -(selectedCoupon.discountRate || 100) / 100} = ${calculatedAmount.toLocaleString('en-US')}`;
       } else {
         return `${totalAmount.toLocaleString('en-US')} - ${(selectedCoupon.discountAmount || 0).toLocaleString('en-US')} = ${calculatedAmount.toLocaleString('en-US')}`;
       }

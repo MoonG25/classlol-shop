@@ -60,11 +60,12 @@ const connector = connect(null, mapDispatchToProps);
 
 type ProductProps = {
   product: Product;
+  isAppended: boolean;
   addProduct: Function;
   delProduct: Function;
 }
 
-const ProductCard: React.FC<ProductProps> = ({product, addProduct, delProduct}) => {
+const ProductCard: React.FC<ProductProps> = ({product, isAppended, addProduct, delProduct}) => {
   const handleAdd = () => addProduct(product);
   const handleDel = () => delProduct(product.id);
   return (
@@ -74,8 +75,8 @@ const ProductCard: React.FC<ProductProps> = ({product, addProduct, delProduct}) 
         <h2 className="product-title">{product.title}</h2>
         <span className="product-price">{product.price.toLocaleString('en-US')} 원</span>
         <div className="product-actions">
-          <button onClick={handleAdd}>담기</button>
-          <button onClick={handleDel}>빼기</button>
+          <button onClick={handleAdd} disabled={isAppended}>담기</button>
+          { isAppended && <button onClick={handleDel}>빼기</button> }
         </div>
       </div>
     </ProductCardWrapper>

@@ -24,7 +24,7 @@ const mapState = (state: RootState) => ({
 
 const connector = connect(mapState);
 
-type CartProps = {
+type CartPageProps = {
   cart: Cart;
   coupon?: CouponState;
   totalAmount: number;
@@ -39,7 +39,7 @@ type CartProps = {
  * @todo [] 쿠폰 가능한 아이템 분리
  * @todo [] 총액 계산 분리하기
  */
-const CartPage: React.FC<CartProps> = ({ cart, coupon }) => {
+const CartPage: React.FC<CartPageProps> = ({ cart, coupon }) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [isShow, setIsShow] = useState(false);
   useEffect(() => {

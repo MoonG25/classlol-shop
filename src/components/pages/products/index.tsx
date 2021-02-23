@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './product-card';
-import { Product, ReturnState } from '../../../types';
+import { Cart, Product, ReturnState } from '../../../types';
 import { getProductItems } from '../../../data/api';
 import styled from 'styled-components';
+import { RootState } from '../../../redux';
+import { connect } from 'react-redux';
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -30,11 +32,21 @@ const PageButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
+const mapState = (state: RootState) => ({
+  cart: state.cart.cart,
+});
+
+const connector = connect(mapState);
+
+type ProductPageProps = {
+  cart: Cart;
+}
+
 /**
  * @todo [x] pagination
  * @todo [ ] 담기 뺴기 처리
  */
-const ProductPage: React.FC = () => {
+const ProductPage: React.FC<ProductPageProps> = ({ cart }) => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [pages, setPages] = useState(0);
@@ -60,6 +72,8 @@ const ProductPage: React.FC = () => {
     return buttons;
   }
 
+  const isAppended = (id: Product['id']) => cart[id] ? true : false;
+
   return (
     <PageWrapper>
       <h1>Product</h1>
@@ -67,7 +81,8 @@ const ProductPage: React.FC = () => {
         products.map((product: Product) => 
           <ProductCard 
             key={product.id} 
-            product={product} 
+            product={product}
+            isAppended={isAppended(product.id)}
           />)
       }
       <div className="page-buttons">
@@ -79,4 +94,4 @@ const ProductPage: React.FC = () => {
   );
 };
 
-export default ProductPage;
+export default connector(ProductPage);

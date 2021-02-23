@@ -13,10 +13,6 @@ type CouponProps = {
   checked: boolean;
 }
 
-/**
- * 
- * @todo 쿠폰 값 지정해서 변경마다 처리하기
- */
 const Coupon: React.FC<CouponProps> = ({ index, coupon, selectCoupon, checked }) => {
   const couponId: string = `coupon-${index}`;
   const handleClickCoupon = () => selectCoupon(coupon);

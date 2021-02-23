@@ -1,22 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './product-card';
-import productItems from '../../../data/productItems';
-import { Product } from '../../../types';
+import { Product, ReturnState } from '../../../types';
+import { getProductItems } from '../../../data/api';
+import styled from 'styled-components';
+
+const PageWrapper = styled.div`
+  width: 100%;
+
+  .page-buttons {
+    text-align: right;
+  }
+`;
+
+const PageButton = styled.button<{ isActive: boolean }>`
+  width: 28px;
+  height: 28px;
+  border: 1px solid #eee;
+  outline: none;
+  
+  ${p => p.isActive 
+    ? `
+      background-color: black;
+      color: white;
+      ` 
+    : `
+      background-color: white;
+      cursor: pointer;
+      `
+  }
+`;
 
 /**
- * @todo pagination
+ * @todo [x] pagination
+ * @todo [ ] 담기 뺴기 처리
  */
 const ProductPage: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [pages, setPages] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
+
   useEffect(() => {
-    const sortProducts = async () => {
-      const sortedProducts: Product[] = await productItems.sort((p1, p2) => p1.score > p2.score ? -1 : 1);
-      setProducts(sortedProducts);
+    const getProducts = async () => {
+      const data: ReturnState = await getProductItems(page);
+      setPages(data.pages);
+      setTotal(data.total);
+      setProducts(data.productItems);
     };
-    sortProducts();
-  }, [])
+    getProducts();
+  }, [page])
+
+  const handlePage = (p: number) => setPage(p);
+
+  const getPageButton = () => {
+    const buttons = [];
+    for (let i = 1; i <= pages; i++) {
+      buttons.push(<PageButton key={i} isActive={page === i} onClick={() => handlePage(i)}>{i}</PageButton>)
+    }
+    return buttons;
+  }
+
   return (
-    <ul>
+    <PageWrapper>
+      <h1>Product</h1>
       { 
         products.map((product: Product) => 
           <ProductCard 
@@ -24,7 +70,12 @@ const ProductPage: React.FC = () => {
             product={product} 
           />)
       }
-    </ul>
+      <div className="page-buttons">
+        {
+          getPageButton()
+        }
+      </div>
+    </PageWrapper>
   );
 };
 

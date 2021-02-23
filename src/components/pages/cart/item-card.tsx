@@ -10,7 +10,6 @@ const ItemCardWrapper = styled.div`
   padding: 12px;
   display: flex;
   column-gap: 1em;
-  box-sizing: border-box;
   border-bottom: 1px solid #eee;
 
   input[type="checkbox"] {
@@ -99,7 +98,7 @@ const ItemCard: React.FC<ItemProps> = ({
       <img src={product.coverImage} alt="product_image" />
       <div className="cart__item-info">
         <h2 className="cart__item-title">{product.title}</h2>
-        <span className="cart__item-price">{product.price.toLocaleString('en-US')}</span> 원
+        <span className="cart__item-price">{product.price.toLocaleString('en-US')} 원</span>
         <div className="cart__item-actions">
           <button className="cart__item-button" onClick={handleDel}>-</button>
           <input type="text" pattern="[0-9]*" readOnly value={quantity} />

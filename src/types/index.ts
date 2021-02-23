@@ -23,3 +23,9 @@ export interface CartItem {
 }
 
 export type Cart = { [key: string]: CartItem };
+
+export interface ReturnState {
+  productItems: Product[];
+  total: number;
+  pages: number;
+}

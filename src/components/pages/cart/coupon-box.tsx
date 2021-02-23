@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { default as MyCoupons } from'../../../data/coupons';
+import { getItemCoupons } from '../../../data/api';
 import { CartActionTypes, UPDATE_COUPON } from '../../../redux/cart/actions';
 import { Coupon as CouponState } from '../../../types';
 import Coupon from './coupon';
@@ -33,6 +33,20 @@ const BoxWrapper = styled.div`
     outline: none;
     cursor: pointer;
   }
+
+  h4 {
+    margin-top: 1em;
+    text-align: center;
+  }
+
+  .coupon-button {
+    margin-top: 1em;
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid #eee;
+    cursor: pointer;
+  }
 `;
 
 const mapDispatchToProps = (dispatch: Dispatch<CartActionTypes>) => {
@@ -51,15 +65,16 @@ type CouponBoxProps = {
 };
 
 const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prevCoupon, updateCoupon }) => {
-  const [myCoupons, setMyCoupons] = useState<CouponState[]>([]);
+  const [itemCoupons, setItemCoupons] = useState<CouponState[]>([]);
   const [calculatedAmount, setCalculatedAmount] = useState(totalAmount);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponState | undefined>(undefined);
 
   useEffect(() => {
-    const getMyCoupons = async () => {
-      await setMyCoupons(MyCoupons as CouponState[]);
+    const getCoupons = async () => {
+      const data = await getItemCoupons();
+      setItemCoupons(data as CouponState[]);
     };
-    getMyCoupons();
+    getCoupons();
   }, []);
 
   useEffect(() => {
@@ -107,7 +122,7 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prev
       <div className="box-inner">
         <button className="box-close" onClick={handleClose}>x</button>
         {
-          myCoupons.map((coupon, index) => {
+          itemCoupons.map((coupon, index) => {
             const checked = selectedCoupon ? (selectedCoupon.title === coupon.title) : false;
             return (<Coupon 
               key={index} 
@@ -119,7 +134,7 @@ const CouponBox: React.FC<CouponBoxProps> = ({ totalAmount, closeCouponBox, prev
           })
         }
         { selectedCoupon && <h4>{getResultText()}원</h4> }
-        <button onClick={handleUpdateCoupon}>쿠폰적용</button>
+        <button className="coupon-button" onClick={handleUpdateCoupon}>쿠폰적용</button>
       </div>
     </BoxWrapper>
   )

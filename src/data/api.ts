@@ -1,5 +1,6 @@
 import { Product } from '../types';
 import productItems from './productItems';
+import coupons from './coupons';
 
 const sortByScore = (p1: Product, p2: Product) => p1.score > p2.score ? -1 : 1;
 
@@ -16,4 +17,8 @@ export const getProductItems = async (page: number, perPage = 5) => {
     total,
     pages,
   }
+}
+
+export const getItemCoupons = () => {
+  return coupons;
 }

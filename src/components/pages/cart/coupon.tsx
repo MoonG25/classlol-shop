@@ -2,8 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Coupon as CouponState } from '../../../types';
 
-const CouponWrapper = styled.div`
-
+const CouponWrapper = styled.div`    
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #eee;
+  width: 100%;
+  padding: 5px;
 `;
 
 type CouponProps = {

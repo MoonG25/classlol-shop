@@ -1,24 +1,17 @@
 # CLASS 101 App
 
-## TODO
+클래스 쇼핑 앱입니다.
 
-- setting
-  - [x] port 3001
-- products page
-  - [x] product list (price, name, image, )
-  - [ ] pagination
-  - [x] add product
-  - [x] del product
-  - [x] max 3
-- cart page
-  - [x] add
-  - [x] del
-  - [x] show total amount
-- coupon
-  - [ ] discount amount
-  - [ ] discount rate
-  - [ ] check available coupon
-- style
-  - [ ] index page
-  - [ ] product page
-  - [ ] cart page
+듣고싶은 클래스를 3개까지 장바구니에 담을 수 있고, 쿠폰을 사용할 수 있습니다.
+
+## Install
+
+```
+$ npm install
+```
+
+## Start
+
+```
+$ npm start
+```

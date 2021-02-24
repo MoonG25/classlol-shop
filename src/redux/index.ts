@@ -15,7 +15,6 @@ const calcAmountMiddleware: Middleware<
 > = store => next => async (action) => {
   const result = next(action);
   if (action.type !== CALC_AMOUNT) {
-    console.log('[MIDDLEWARE] Calculating...');
     const data = await calcAmount(store.getState().cart.cart);
     next({ type: CALC_AMOUNT, payload: data });
   }

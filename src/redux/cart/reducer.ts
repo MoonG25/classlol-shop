@@ -60,13 +60,14 @@ export function cartReducer (
       const { payload: { id }} = action;
       const cart = JSON.parse(JSON.stringify(state.cart));
       const product = cart[id]?.product;
+      const cartSize = Object.keys(cart).length;
       if (product) {
         cart[id].quantity -= 1;
         if (cart[id].quantity === 0) delete cart[id];
         return {
           ...state,
           cart: cart,
-          coupon: state.coupon,
+          coupon: (cartSize > 1) ? state.coupon : undefined
         }
       }
       return state;

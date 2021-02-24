@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from '../../../redux';
 import { Cart, Coupon as CouponState } from '../../../types';
@@ -41,8 +41,11 @@ type CartPageProps = {
 
 const CartPage: React.FC<CartPageProps> = ({ cart, coupon, salesAmount, totalAmount }) => {
   const [isShow, setIsShow] = useState(false);
+  const [isAvailable, setIsAvailable] = useState(false);
   const openCouponBox = () => {
-    if (Object.values(cart).length) {
+    if (!isAvailable) {
+      alert('쿠폰 적용이 가능한 상품이 없습니다.');
+    } else if (Object.values(cart).length) {
       setIsShow(true);
     }
   }
@@ -52,11 +55,20 @@ const CartPage: React.FC<CartPageProps> = ({ cart, coupon, salesAmount, totalAmo
       if (coupon.type === 'rate') {
         return salesAmount * ((coupon.discountRate || 100) / 100);
       } else {
-        return coupon.discountAmount || 0;
+        return salesAmount ? (coupon.discountAmount || 0) : 0;
       }
     }
     return 0;
   }
+  useEffect(() => {
+    const checkCouponAvailable = async () => {
+      const findAvailable = await Object.keys(cart)
+        .map(id => cart[id].isChecked && (cart[id].product.availableCoupon !== false))
+        .find(available => available === true);
+      setIsAvailable(findAvailable ? true : false);
+    };
+    checkCouponAvailable();
+  }, [cart]);
   return (
     <div>
       <h1>Cart</h1>
